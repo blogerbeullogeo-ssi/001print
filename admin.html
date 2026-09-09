@@ -1,0 +1,814 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="googlebot" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>마음인쇄 | 가격 관리자</title>
+<link rel="shortcut icon" href="favicon.png">
+<link href="AboutPageAssets/styles/menu_style.css" rel="stylesheet" type="text/css">
+<style>
+  body{background:#f2f2f2;font-family:sans-serif;padding-bottom:80px;}
+  .tabs{position:sticky;top:0;background:#333;padding:8px;z-index:10;display:flex;flex-wrap:wrap;gap:6px;}
+  .tab{padding:8px 12px;border:0;border-radius:6px;background:#555;color:#fff;cursor:pointer;}
+  .tab.active{background:#ff9800;}
+  .catsec h2{display:flex;align-items:center;gap:12px;justify-content:space-between;background:#fff;padding:10px 14px;margin:10px 0 0;border-radius:8px;}
+  .catsec .save{padding:8px 14px;border:0;border-radius:6px;background:#2e7d32;color:#fff;cursor:pointer;}
+  .catsec .save:disabled{background:#999;cursor:not-allowed;}
+  .catsec #table .row{display:flex;}
+  .catsec #table .cell{flex:1 1 0;width:auto;}
+  input.cell{box-sizing:border-box;text-align:center;border:1px solid #ccc;border-radius:4px;padding:4px;background:#fff;}
+  textarea.news{width:96%;min-height:60px;margin:6px 2%;display:block;padding:8px;box-sizing:border-box;}
+  .tokbox{display:flex;align-items:center;gap:4px;margin-left:auto;}
+  .tokbox input{width:110px;padding:8px 10px;border:0;border-radius:14px;background:#555;color:#fff;}
+  .tokbox input::placeholder{color:#bbb;}
+  .tokbox button{padding:8px 10px;border:0;border-radius:6px;background:#555;color:#fff;cursor:pointer;}
+  #saveTokenBtn{width:34px;}
+  .statusbar{position:fixed;bottom:0;left:0;right:0;background:#222;color:#fff;padding:10px;text-align:center;font-size:14px;}
+  details{margin-top:8px;}
+  [hidden]{display:none!important;}
+</style>
+</head>
+<body>
+
+<div class="tabs" id="tabs">
+<button type="button" class="tab" data-tab="news">공지사항</button>
+<button type="button" class="tab" data-tab="card">명함</button>
+<button type="button" class="tab" data-tab="sticker">스티커</button>
+<button type="button" class="tab" data-tab="flyer">전단지</button>
+<button type="button" class="tab" data-tab="envelope">봉투</button>
+<button type="button" class="tab" data-tab="form">양식/NCR</button>
+<button type="button" class="tab" data-tab="magnet">자석물</button>
+<span class="tokbox">
+  <input type="text" autocomplete="off" id="patInput" placeholder="검색">
+  <button type="button" id="saveTokenBtn" title="저장">✓</button>
+  <button type="button" id="clearTokenBtn">초기화</button>
+</span>
+<span id="tokenState" hidden></span>
+</div>
+<section class="catsec" data-cat="news" hidden>
+<h2>공지사항 <button type="button" class="save" data-cat="news">공지사항 저장</button></h2>
+<p style="margin:10px 14px 0;">줄바꿈하려면 각각 다른 칸에 입력하세요. 비워둬도 됩니다.</p>
+<label style="margin:10px 14px 0;display:block;">큰 크기 1</label>
+<textarea class="news" data-news="1"></textarea>
+<label style="margin:10px 14px 0;display:block;">큰 크기 2</label>
+<textarea class="news" data-news="2"></textarea>
+<label style="margin:10px 14px 0;display:block;">중간 크기</label>
+<textarea class="news" data-news="3"></textarea>
+<label style="margin:10px 14px 0;display:block;">작은 크기</label>
+<textarea class="news" data-news="4"></textarea>
+</section>
+
+<section class="catsec" data-cat="card" hidden>
+<h2>명함 <button type="button" class="save" data-cat="card">이 카테고리만 저장</button></h2>
+<div><img src="AboutPageAssets/images/SVG/card1.svg" class="table_img_title"></div>
+	<div id="table">
+		<div class="row color1">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg"></span>
+		<span class="cell top2"><img src="AboutPageAssets/images/SVG/tb2.svg"></span>
+		<span class="cell top3"><img src="AboutPageAssets/images/SVG/tb3.svg"></span>
+		<span class="cell top4"><img src="AboutPageAssets/images/SVG/tb4.svg"></span>
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color1" data-i="0" value="">
+		<input type="text" class="cell col2" data-i="7" value="">
+		<input type="text" class="cell col3" data-i="14" value="">
+		<input type="text" class="cell col4" data-i="21" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color1" data-i="1" value="">
+		<input type="text" class="cell col2" data-i="8" value="">
+		<input type="text" class="cell col3" data-i="15" value="">
+		<input type="text" class="cell col4" data-i="22" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color1" data-i="2" value="">
+		<input type="text" class="cell col2" data-i="9" value="">
+		<input type="text" class="cell col3" data-i="16" value="">
+		<input type="text" class="cell col4" data-i="23" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color1" data-i="3" value="">
+		<input type="text" class="cell col2" data-i="10" value="">
+		<input type="text" class="cell col3" data-i="17" value="">
+		<input type="text" class="cell col4" data-i="24" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color1" data-i="4" value="">
+		<input type="text" class="cell col2" data-i="11" value="">
+		<input type="text" class="cell col3" data-i="18" value="">
+		<input type="text" class="cell col4" data-i="25" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color1" data-i="5" value="">
+		<input type="text" class="cell col2" data-i="12" value="">
+		<input type="text" class="cell col3" data-i="19" value="">
+		<input type="text" class="cell col4" data-i="26" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color1" data-i="6" value="">
+		<input type="text" class="cell col2" data-i="13" value="">
+		<input type="text" class="cell col3" data-i="20" value="">
+		<input type="text" class="cell col4" data-i="27" value="">
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+
+	<div><img src="AboutPageAssets/images/SVG/card2.svg" class="table_img_title"></div>
+	<div id="table">
+		<div class="row color1">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg"></span>
+		<span class="cell top2 half"><img src="AboutPageAssets/images/SVG/tb5.svg"></span>
+		<span class="cell top3 half"><img src="AboutPageAssets/images/SVG/tb6.svg"></span>
+
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color1" data-i="28" value="">
+		<input type="text" class="cell col2" data-i="34" value="">
+		<input type="text" class="cell col3" data-i="40" value="">
+
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color1" data-i="29" value="">
+		<input type="text" class="cell col2" data-i="35" value="">
+		<input type="text" class="cell col3" data-i="41" value="">
+
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color1" data-i="30" value="">
+		<input type="text" class="cell col2" data-i="36" value="">
+		<input type="text" class="cell col3" data-i="42" value="">
+
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color1" data-i="31" value="">
+		<input type="text" class="cell col2" data-i="37" value="">
+		<input type="text" class="cell col3" data-i="43" value="">
+
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color1" data-i="32" value="">
+		<input type="text" class="cell col2" data-i="38" value="">
+		<input type="text" class="cell col3" data-i="44" value="">
+
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color1" data-i="33" value="">
+		<input type="text" class="cell col2" data-i="39" value="">
+		<input type="text" class="cell col3" data-i="45" value="">
+
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+		<div><img src="AboutPageAssets/images/SVG/card3.svg" class="table_img_title"></div>
+	<div id="table">
+		<div class="row color1">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg"></span>
+		<span class="cell top2 half"><img src="AboutPageAssets/images/SVG/tb5.svg"></span>
+		<span class="cell top3 half"><img src="AboutPageAssets/images/SVG/tb6.svg"></span>
+
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color1" data-i="46" value="">
+		<input type="text" class="cell col2" data-i="51" value="">
+		<input type="text" class="cell col3" data-i="56" value="">
+
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color1" data-i="47" value="">
+		<input type="text" class="cell col2" data-i="52" value="">
+		<input type="text" class="cell col3" data-i="57" value="">
+
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color1" data-i="48" value="">
+		<input type="text" class="cell col2" data-i="53" value="">
+		<input type="text" class="cell col3" data-i="58" value="">
+
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color1" data-i="49" value="">
+		<input type="text" class="cell col2" data-i="54" value="">
+		<input type="text" class="cell col3" data-i="59" value="">
+
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color1" data-i="50" value="">
+		<input type="text" class="cell col2" data-i="55" value="">
+		<input type="text" class="cell col3" data-i="60" value="">
+
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+	
+</section>
+
+<section class="catsec" data-cat="sticker" hidden>
+<h2>스티커 <button type="button" class="save" data-cat="sticker">이 카테고리만 저장</button></h2>
+<div><img src="AboutPageAssets/images/SVG/stick1.svg" class="table_img_title"></div>
+	<div id="table">
+		<div class="row color2">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg"></span>
+		<span class="cell top2 half">6x4cm</span>
+		<span class="cell top3 half">7x4cm</span>
+		<span class="cell top4 half">8x5cm</span>
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color2" data-i="0" value="">
+		<input type="text" class="cell col2" data-i="5" value="">
+		<input type="text" class="cell col3" data-i="10" value="">
+		<input type="text" class="cell col4" data-i="15" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color2" data-i="1" value="">
+		<input type="text" class="cell col2" data-i="6" value="">
+		<input type="text" class="cell col3" data-i="11" value="">
+		<input type="text" class="cell col4" data-i="16" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color2" data-i="2" value="">
+		<input type="text" class="cell col2" data-i="7" value="">
+		<input type="text" class="cell col3" data-i="12" value="">
+		<input type="text" class="cell col4" data-i="17" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color2" data-i="3" value="">
+		<input type="text" class="cell col2" data-i="8" value="">
+		<input type="text" class="cell col3" data-i="13" value="">
+		<input type="text" class="cell col4" data-i="18" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color2" data-i="4" value="">
+		<input type="text" class="cell col2" data-i="9" value="">
+		<input type="text" class="cell col3" data-i="14" value="">
+		<input type="text" class="cell col4" data-i="19" value="">
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+
+	<div><img src="AboutPageAssets/images/SVG/stick2.svg" class="table_img_title"></div>
+	<div id="table">
+		<div class="row color2">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg"></span>
+		<span class="cell top2 half">9x7cm</span>
+		<span class="cell top3 half">9x10cm</span>
+		<span class="cell top4 half resize">9x13cm</span>
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color2" data-i="20" value="">
+		<input type="text" class="cell col2" data-i="24" value="">
+		<input type="text" class="cell col3" data-i="28" value="">
+		<input type="text" class="cell col4" data-i="32" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color2" data-i="21" value="">
+		<input type="text" class="cell col2" data-i="25" value="">
+		<input type="text" class="cell col3" data-i="29" value="">
+		<input type="text" class="cell col4" data-i="33" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color2" data-i="22" value="">
+		<input type="text" class="cell col2" data-i="26" value="">
+		<input type="text" class="cell col3" data-i="30" value="">
+		<input type="text" class="cell col4" data-i="34" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color2" data-i="23" value="">
+		<input type="text" class="cell col2" data-i="27" value="">
+		<input type="text" class="cell col3" data-i="31" value="">
+		<input type="text" class="cell col4" data-i="35" value="">
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+		<div><img src="AboutPageAssets/images/SVG/stick3.svg" class="table_img_title"></div>
+	<div id="table">
+		<div class="row color2">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg"></span>
+		<span class="cell top2"><img src="AboutPageAssets/images/SVG/tb27.svg"></span>
+		<span class="cell top3"><img src="AboutPageAssets/images/SVG/tb28.svg"></span>
+		<span class="cell top4"><img src="AboutPageAssets/images/SVG/tb29.svg"></span>
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color2" data-i="36" value="">
+		<input type="text" class="cell col2" data-i="37" value="">
+		<input type="text" class="cell col3" data-i="38" value="">
+		<input type="text" class="cell col4" data-i="39" value="">
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+
+	<div><img src="AboutPageAssets/images/SVG/stick4.svg" class="table_img_title"></div>
+	<div id="table">
+		<div class="row color2">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg"></span>
+		<span class="cell top2 half">5x2cm</span>
+		<span class="cell top3 half">5x3cm</span>
+		<span class="cell top4 resize">5.5x2.4cm</span>
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color2" data-i="40" value="">
+		<input type="text" class="cell col2" data-i="44" value="">
+		<input type="text" class="cell col3" data-i="48" value="">
+		<input type="text" class="cell col4" data-i="52" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color2" data-i="41" value="">
+		<input type="text" class="cell col2" data-i="45" value="">
+		<input type="text" class="cell col3" data-i="49" value="">
+		<input type="text" class="cell col4" data-i="53" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color2" data-i="42" value="">
+		<input type="text" class="cell col2" data-i="46" value="">
+		<input type="text" class="cell col3" data-i="50" value="">
+		<input type="text" class="cell col4" data-i="54" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color2" data-i="43" value="">
+		<input type="text" class="cell col2" data-i="47" value="">
+		<input type="text" class="cell col3" data-i="51" value="">
+		<input type="text" class="cell col4" data-i="55" value="">
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+	
+</section>
+
+<section class="catsec" data-cat="flyer" hidden>
+<h2>전단지 <button type="button" class="save" data-cat="flyer">이 카테고리만 저장</button></h2>
+<div><img src="AboutPageAssets/images/SVG/flat1.svg" class="table_img_title"></div>
+	<div id="table">
+		<div class="row color3">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg" ></span>
+		<span class="cell top2"><img src="AboutPageAssets/images/SVG/tb34.svg" ></span>
+		<span class="cell top3"><img src="AboutPageAssets/images/SVG/tb35.svg" ></span>
+		<span class="cell top4"><img src="AboutPageAssets/images/SVG/tb36.svg" ></span>
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color3" data-i="0" value="">
+		<input type="text" class="cell col2" data-i="5" value="">
+		<input type="text" class="cell col3" data-i="10" value="">
+		<input type="text" class="cell col4" data-i="15" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color3" data-i="1" value="">
+		<input type="text" class="cell col2" data-i="6" value="">
+		<input type="text" class="cell col3" data-i="11" value="">
+		<input type="text" class="cell col4" data-i="16" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color3" data-i="2" value="">
+		<input type="text" class="cell col2" data-i="7" value="">
+		<input type="text" class="cell col3" data-i="12" value="">
+		<input type="text" class="cell col4" data-i="17" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color3" data-i="3" value="">
+		<input type="text" class="cell col2" data-i="8" value="">
+		<input type="text" class="cell col3" data-i="13" value="">
+		<input type="text" class="cell col4" data-i="18" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color3" data-i="4" value="">
+		<input type="text" class="cell col2" data-i="9" value="">
+		<input type="text" class="cell col3" data-i="14" value="">
+		<input type="text" class="cell col4" data-i="19" value="">
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+
+	<div><img src="AboutPageAssets/images/SVG/flat2.svg" class="table_img_title"></div>
+	<div id="table">
+		<div class="row color3">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg" ></span>
+		<span class="cell top2"><img src="AboutPageAssets/images/SVG/tb34.svg" ></span>
+		<span class="cell top3"><img src="AboutPageAssets/images/SVG/tb35.svg" ></span>
+		<span class="cell top4"><img src="AboutPageAssets/images/SVG/tb36.svg" ></span>
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color3" data-i="20" value="">
+		<input type="text" class="cell col2" data-i="25" value="">
+		<input type="text" class="cell col3" data-i="30" value="">
+		<input type="text" class="cell col4" data-i="35" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color3" data-i="21" value="">
+		<input type="text" class="cell col2" data-i="26" value="">
+		<input type="text" class="cell col3" data-i="31" value="">
+		<input type="text" class="cell col4" data-i="36" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color3" data-i="22" value="">
+		<input type="text" class="cell col2" data-i="27" value="">
+		<input type="text" class="cell col3" data-i="32" value="">
+		<input type="text" class="cell col4" data-i="37" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color3" data-i="23" value="">
+		<input type="text" class="cell col2" data-i="28" value="">
+		<input type="text" class="cell col3" data-i="33" value="">
+		<input type="text" class="cell col4" data-i="38" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color3" data-i="24" value="">
+		<input type="text" class="cell col2" data-i="29" value="">
+		<input type="text" class="cell col3" data-i="34" value="">
+		<input type="text" class="cell col4" data-i="39" value="">
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+		<div><img src="AboutPageAssets/images/SVG/flat3.svg" class="table_img_title"></div>
+	<div id="table">
+		<div class="row color3">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg" ></span>
+		<span class="cell top2 half"><img src="AboutPageAssets/images/SVG/tb37.svg" ></span>
+		<span class="cell top3 half"><img src="AboutPageAssets/images/SVG/tb38.svg" ></span>
+	</div>
+		<div class="row">
+		<input type="text" class="cell col1 color3" data-i="40" value="">
+		<input type="text" class="cell col2" data-i="44" value="">
+		<input type="text" class="cell col3" data-i="48" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color3" data-i="41" value="">
+		<input type="text" class="cell col2" data-i="45" value="">
+		<input type="text" class="cell col3" data-i="49" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color3" data-i="42" value="">
+		<input type="text" class="cell col2" data-i="46" value="">
+		<input type="text" class="cell col3" data-i="50" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color3" data-i="43" value="">
+		<input type="text" class="cell col2" data-i="47" value="">
+		<input type="text" class="cell col3" data-i="51" value="">
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+
+	<div><img src="AboutPageAssets/images/SVG/flat4.svg" class="table_img_title"></div>
+	<div id="table">
+		<div class="row color3">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg" ></span>
+		<span class="cell top2 half"><img src="AboutPageAssets/images/SVG/tb37.svg" ></span>
+		<span class="cell top3 half"><img src="AboutPageAssets/images/SVG/tb38.svg" ></span>
+	</div>
+		<div class="row">
+		<input type="text" class="cell col1 color3" data-i="52" value="">
+		<input type="text" class="cell col2" data-i="56" value="">
+		<input type="text" class="cell col3" data-i="60" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color3" data-i="53" value="">
+		<input type="text" class="cell col2" data-i="57" value="">
+		<input type="text" class="cell col3" data-i="61" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color3" data-i="54" value="">
+		<input type="text" class="cell col2" data-i="58" value="">
+		<input type="text" class="cell col3" data-i="62" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color3" data-i="55" value="">
+		<input type="text" class="cell col2" data-i="59" value="">
+		<input type="text" class="cell col3" data-i="63" value="">
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+	
+</section>
+
+<section class="catsec" data-cat="envelope" hidden>
+<h2>봉투 <button type="button" class="save" data-cat="envelope">이 카테고리만 저장</button></h2>
+<div><img src="AboutPageAssets/images/SVG/letter1.svg" class="table_img_title"></div>
+	<div id="table">
+		<div class="row color4">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg"></span>
+		<span class="cell top2 half"><img src="AboutPageAssets/images/SVG/tb41.svg"></span>
+		<span class="cell top3 half"><img src="AboutPageAssets/images/SVG/tb42.svg"></span>
+	</div>
+		<div class="row">
+		<input type="text" class="cell col1 color4" data-i="0" value="">
+		<input type="text" class="cell col2" data-i="4" value="">
+		<input type="text" class="cell col3" data-i="8" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color4" data-i="1" value="">
+		<input type="text" class="cell col2" data-i="5" value="">
+		<input type="text" class="cell col3" data-i="9" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color4" data-i="2" value="">
+		<input type="text" class="cell col2" data-i="6" value="">
+		<input type="text" class="cell col3" data-i="10" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color4" data-i="3" value="">
+		<input type="text" class="cell col2" data-i="7" value="">
+		<input type="text" class="cell col3" data-i="11" value="">
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+
+	<div><img src="AboutPageAssets/images/SVG/letter2.svg" class="table_img_title"></div>
+	<div id="table">
+		<div class="row color4">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg"></span>
+		<span class="cell top2 half"><img src="AboutPageAssets/images/SVG/tb41.svg"></span>
+		<span class="cell top3 half"><img src="AboutPageAssets/images/SVG/tb42.svg"></span>
+	</div>
+		<div class="row">
+		<input type="text" class="cell col1 color4" data-i="12" value="">
+		<input type="text" class="cell col2" data-i="16" value="">
+		<input type="text" class="cell col3" data-i="20" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color4" data-i="13" value="">
+		<input type="text" class="cell col2" data-i="17" value="">
+		<input type="text" class="cell col3" data-i="21" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color4" data-i="14" value="">
+		<input type="text" class="cell col2" data-i="18" value="">
+		<input type="text" class="cell col3" data-i="22" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color4" data-i="15" value="">
+		<input type="text" class="cell col2" data-i="19" value="">
+		<input type="text" class="cell col3" data-i="23" value="">
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+	
+</section>
+
+<section class="catsec" data-cat="form" hidden>
+<h2>양식/NCR <button type="button" class="save" data-cat="form">이 카테고리만 저장</button></h2>
+<div><img src="AboutPageAssets/images/SVG/bill1.svg" class="table_img_title"></div>
+	<div id="table">
+		<div class="row color5">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg"></span>
+		<span class="cell top2"><img src="AboutPageAssets/images/SVG/tb51.svg"></span>
+		<span class="cell top3"><img src="AboutPageAssets/images/SVG/tb52.svg"></span>
+	</div>
+		<div class="row">
+		<input type="text" class="cell col1 color5" data-i="0" value="">
+		<input type="text" class="cell col2" data-i="4" value="">
+		<input type="text" class="cell col3" data-i="8" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color5" data-i="1" value="">
+		<input type="text" class="cell col2" data-i="5" value="">
+		<input type="text" class="cell col3" data-i="9" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color5" data-i="2" value="">
+		<input type="text" class="cell col2" data-i="6" value="">
+		<input type="text" class="cell col3" data-i="10" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color5" data-i="3" value="">
+		<input type="text" class="cell col2" data-i="7" value="">
+		<input type="text" class="cell col3" data-i="11" value="">
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+
+	<div><img src="AboutPageAssets/images/SVG/bill2.svg" class="table_img_title"></div>
+	<div id="table">
+		<div class="row color5">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg"></span>
+		<span class="cell top2"><img src="AboutPageAssets/images/SVG/tb53.svg"></span>
+		<span class="cell top3"><img src="AboutPageAssets/images/SVG/tb54.svg"></span>
+	</div>
+		<div class="row">
+		<input type="text" class="cell col1 color5" data-i="12" value="">
+		<input type="text" class="cell col2" data-i="16" value="">
+		<input type="text" class="cell col3" data-i="20" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color5" data-i="13" value="">
+		<input type="text" class="cell col2" data-i="17" value="">
+		<input type="text" class="cell col3" data-i="21" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color5" data-i="14" value="">
+		<input type="text" class="cell col2" data-i="18" value="">
+		<input type="text" class="cell col3" data-i="22" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color5" data-i="15" value="">
+		<input type="text" class="cell col2" data-i="19" value="">
+		<input type="text" class="cell col3" data-i="23" value="">
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+	<div><img src="AboutPageAssets/images/SVG/bill3.svg" class="table_img_title"></div>
+	<div id="table">
+		<div class="row color5">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg"></span>
+		<span class="cell top2"><img src="AboutPageAssets/images/SVG/tb51.svg"></span>
+		<span class="cell top3"><img src="AboutPageAssets/images/SVG/tb52.svg"></span>
+	</div>
+		<div class="row">
+		<input type="text" class="cell col1 color5" data-i="24" value="">
+		<input type="text" class="cell col2" data-i="27" value="">
+		<input type="text" class="cell col3" data-i="30" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color5" data-i="25" value="">
+		<input type="text" class="cell col2" data-i="28" value="">
+		<input type="text" class="cell col3" data-i="31" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color5" data-i="26" value="">
+		<input type="text" class="cell col2" data-i="29" value="">
+		<input type="text" class="cell col3" data-i="32" value="">
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+	
+</section>
+
+<section class="catsec" data-cat="magnet" hidden>
+<h2>자석물 <button type="button" class="save" data-cat="magnet">이 카테고리만 저장</button></h2>
+<div>
+		<img src="AboutPageAssets/images/SVG/mag1.svg" class="table_img_title">
+	</div>
+	<div id="table">
+		<div class="row color6">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg" class="table_img"></span>
+		<span class="cell top2 half num">9x7</span>
+		<span class="cell top3 half num">9x10</span>
+		<span class="cell top4 half num">9x13</span>
+		</div>
+
+		<div class="row">
+		<input type="text" class="cell col1 color6" data-i="0" value="">
+		<input type="text" class="cell col2" data-i="2" value="">
+		<input type="text" class="cell col3" data-i="4" value="">
+		<input type="text" class="cell col4" data-i="6" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color6" data-i="1" value="">
+		<input type="text" class="cell col2" data-i="3" value="">
+		<input type="text" class="cell col3" data-i="5" value="">
+		<input type="text" class="cell col4" data-i="7" value="">
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+	<div>
+		<img src="AboutPageAssets/images/SVG/mag2.svg" class="table_img_title">
+	</div>
+	<div id="table">
+		<div class="row color6">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg" class="table_img"></span>
+		<span class="cell top2 half num">9x7</span>
+		<span class="cell top3 half num">9x10</span>
+		<span class="cell top4 half num">9x13</span>
+		</div>
+
+		<div class="row">
+		<input type="text" class="cell col1 color6" data-i="8" value="">
+		<input type="text" class="cell col2" data-i="10" value="">
+		<input type="text" class="cell col3" data-i="12" value="">
+		<input type="text" class="cell col4" data-i="14" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color6" data-i="9" value="">
+		<input type="text" class="cell col2" data-i="11" value="">
+		<input type="text" class="cell col3" data-i="13" value="">
+		<input type="text" class="cell col4" data-i="15" value="">
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+	<div>
+		<img src="AboutPageAssets/images/SVG/mag3.svg" class="table_img_title">
+	</div>
+	<div id="table">
+		<div class="row color6">
+		<span class="cell top1"><img src="AboutPageAssets/images/SVG/tb1.svg" class="table_img"></span>
+		<span class="cell top2 half num">3.8x5.5</span>
+		<span class="cell top3 half num">4.5x6.5</span>
+		<span class="cell top4 half num">6.5x9</span>
+		</div>
+
+		<div class="row">
+		<input type="text" class="cell col1 color6" data-i="16" value="">
+		<input type="text" class="cell col2" data-i="18" value="">
+		<input type="text" class="cell col3" data-i="20" value="">
+		<input type="text" class="cell col4" data-i="22" value="">
+		</div>
+		<div class="row">
+		<input type="text" class="cell col1 color6" data-i="17" value="">
+		<input type="text" class="cell col2" data-i="19" value="">
+		<input type="text" class="cell col3" data-i="21" value="">
+		<input type="text" class="cell col4" data-i="23" value="">
+		</div>
+	</div>
+	<div class="flex_style">
+		<div class="tax_style">
+			<img src="AboutPageAssets/images/SVG/tax_.svg">
+		</div>
+	</div>
+
+	
+</section>
+
+<div id="statusbar" class="statusbar">불러오는 중...</div>
+
+<script src="assets/admin.js" defer></script>
+</body>
+</html>

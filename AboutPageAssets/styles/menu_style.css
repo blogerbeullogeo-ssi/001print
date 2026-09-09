@@ -1,0 +1,164 @@
+@charset "utf-8";
+/* CSS Document */
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+body {
+	margin-left: auto;
+	margin-right: auto;
+	width: 92%;
+	min-width: 320px;
+	max-width: 960px;
+	padding-left: 2.275%;
+	padding-right: 2.275%;
+}
+
+ul{
+	list-style-type: none;
+	overflow: hidden;
+	margin: 0px;
+	padding: 0px 0px 5px  ;
+}
+
+li {
+	float: left;
+	display: block;		
+    width: 25%;  
+}
+
+.menu_img_title {
+	max-width: 960px;
+	min-width: 480px;	
+}
+.menu_img_under {
+	max-width: 350px;
+	padding-top: 10px;
+	margin-bottom: 20px;
+}
+#table {
+	display: table-header-group;
+    width: 1200px;
+	
+	
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 22px;	
+	color: black;
+}
+.row {
+    display: table-row;	
+}
+
+.cell {
+    display: table-cell;
+    border-bottom: 1px solid #cccccc;
+	padding: 10px;
+	vertical-align: middle;
+	text-align: center;	
+}
+
+.color1 {
+		background-color: #FCDFEB;
+}
+.color2 {
+		background-color: #EFF1AE;
+}
+.color3 {
+		background-color: #FFEBC4;
+}
+.color4 {
+		background-color: #E6E7E8;
+}
+.color5 {
+		background-color: #E1F4FD;
+}
+.color6 {
+		background-color: #FFF9AE;
+}
+.color7 {
+		background-color: #cccccc;
+}
+.color8 {
+		background-color: #cccccc;
+}
+
+.top1{
+	width: 5%;		
+	border-top: 1px solid #cccccc;
+}
+.top2{
+    width: 20%;
+	border-top: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+}
+.top3{
+    width: 20%;
+	border-top: 1px solid #cccccc;
+}
+.top4{
+    width: 20%;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+}
+.col1 {
+	padding: 8px 25px;
+}
+.col2 {
+	border-right: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+}
+.col4 {
+	border-left: 1px solid #cccccc;
+}
+.top1 img{
+	height: 60px;
+}
+.top2 img, .top3 img, .top4 img {
+	height: 30px;
+}
+
+.table_img_title {
+	margin-top: 25px;
+	margin-bottom: 10px;
+	height: 25px;
+}
+
+.half img {
+	height: 20px;
+}
+.resize img {
+	height: 18px;
+}
+
+.tax_style img{
+	height: 12px;
+	margin: 12px;
+}
+.flex_style{
+	max-width: 1200px;
+	
+	display: flex;
+	flex-direction: row-reverse;
+}
+
+.footer1 img{
+	width: 100%;	
+}
+.footer1 {
+	display: block;
+	text-align: center;
+	padding-top: 30px;	
+	padding-bottom: 30px;
+	}
+.footer2 img{
+	float:left;
+	width: 50%;
+	height: 250px;
+}
+.footer3 img{
+	float: left;
+	width: 50%;
+	height: 250px;
+}
+
+.box7_style{
+	width: 70%;	
+}
